@@ -11,9 +11,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   background-color: #EEF1FF;
+  color:#6D67E4;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.active {
+  background-color: rgb(210, 218, 255);
+  padding: 8px 8px;
+  border-radius: 8px;
+  color:#6D67E4 ;
+}
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(210, 218, 255 0.3);
+  color:#6D67E4;
+  width: 100%;
+  overflow-x: hidden;
 }
