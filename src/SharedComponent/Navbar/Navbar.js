@@ -16,7 +16,7 @@ const Navbar = () => {
   }
 
   const handleStickyNav = () => {
-    if (window.scrollY >= 200) {
+    if (window.scrollY >= 130) {
       setStickyNav(true);
     } else {
       setStickyNav(false);
@@ -63,7 +63,7 @@ const Navbar = () => {
               </li>
               <li>
                 <NavLink
-                  to="/addrecipe"
+                  to="/dashboard"
                   aria-label="DashBoard"
                   title="DashBoard"
                   className="font-medium tracking-wide text-[#6D67E4] transition-colors duration-200 hover:text-teal-accent-400"
@@ -71,18 +71,6 @@ const Navbar = () => {
                   DashBoard
                 </NavLink>
               </li>
-              {
-                user && <li>
-                  <NavLink
-                    to="/review"
-                    aria-label="My Review"
-                    title="My Review"
-                    className="font-medium tracking-wide text-[#6D67E4] transition-colors duration-200 hover:text-teal-accent-400"
-                  >
-                    My Review
-                  </NavLink>
-                </li>
-              }
               <li>
                 <NavLink
                   to="/blog"
@@ -118,7 +106,7 @@ const Navbar = () => {
                 }
               </li>
             </ul>
-            <div className="lg:hidden  ">
+            <div className="lg:hidden">
               <button
                 aria-label="Open Menu"
                 title="Open Menu"
@@ -142,7 +130,7 @@ const Navbar = () => {
               </button>
               {isMenuOpen && (
                 <div className="absolute top-0 left-0 w-full z-10 ">
-                  <div className="p-5 rounded shadow-lg">
+                  <div className="p-5 rounded shadow-lg bg-[#EEF1FF]">
                     <div className="flex items-center justify-between mb-4">
                       <div>
                         <Link
@@ -153,7 +141,7 @@ const Navbar = () => {
                         >
                           <img src={logo} alt="" className=' w-2/6 ' />
                           <span className="ml-2 text-2xl font-bold tracking-wide text-[#6D67E4] uppercase">
-                            Cooking<span className='text-[#8E54E9]'>Jelly</span>
+                            Car<span className='text-[#8E54E9]'>seller</span>
                           </span>
                         </Link>
                       </div>
@@ -197,26 +185,14 @@ const Navbar = () => {
                         </li>
                         <li>
                           <NavLink
-                            to="/addrecipe"
-                            aria-label="Add A Recipe"
-                            title="Add A Recipe"
+                            to="/dashboard"
+                            aria-label="Dashboard"
+                            title="Dashboard"
                             className="font-medium tracking-wide text-[#6D67E4] transition-colors duration-200 hover:text-teal-accent-400"
                           >
-                            Add a Recipe
+                            Dashboard
                           </NavLink>
                         </li>
-                        {
-                          user && <li>
-                            <NavLink
-                              to="/review"
-                              aria-label="My Review"
-                              title="My Review"
-                              className="font-medium tracking-wide text-[#6D67E4] transition-colors duration-200 hover:text-teal-accent-400"
-                            >
-                              My Review
-                            </NavLink>
-                          </li>
-                        }
                         <li>
                           <NavLink
                             to="/blog"

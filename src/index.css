@@ -28,8 +28,9 @@ code {
   position: fixed;
   top: 0;
   z-index: 100;
-  background-color: rgba(210, 218, 255 0.3);
+  background-color: rgba(210, 218, 255);
   color:#6D67E4;
   width: 100%;
   overflow-x: hidden;
+
 }
