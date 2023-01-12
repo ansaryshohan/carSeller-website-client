@@ -18,32 +18,60 @@ const Login = () => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
+    const role = form.select.value;
     const password = form.password.value;
     setGivenEmail(email)
 
-    // email and password login
-    login(email, password)
-      .then(res => {
-        const user = res.user;
-        console.log(user);
-        navigate(from, { replace: true })
-        toast.success('welcome to eLearning platform')
+    fetch(`http://localhost:5000/user/${email}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.data.role === role) {
+
+          // email and password login
+          login(email, password)
+            .then(res => {
+              const user = res.user;
+              console.log(user);
+              navigate(from, { replace: true })
+              toast.success('welcome to carSeller')
+            })
+            .catch(
+              err => toast.error(`${err}`)
+            )
+        }
+        else {
+          toast.error(`you don't have a ${role} account`)
+        }
       })
-      .catch(
-        err => toast.error(`${err}`)
-      )
   }
   const handleForgetPassword = () => {
 
     //  forgetPassword handling
     forgetPassword(givenEmail)
-      .then(() => { window.alert('password reset email is sent to your email') })
+      .then(() => { alert('password reset email is sent to your email') })
       .catch(err => { toast.error(`${err}`) })
   }
   // handling google login 
   const handleGoogleSignUp = () => {
     googleSignUp()
       .then(result => {
+        //  database data sending and setting the role
+        const userDocument = {
+          email: result.user.email,
+          role: "buyer",
+          userName: result.user.displayName,
+          userImage: result.user.photoURL,
+        }
+        fetch(`http://localhost:5000/user/${result.user.email}`, {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json"
+          },
+          body: JSON.stringify(userDocument)
+        })
+          .then(res => res.json())
+          .then(data=>{console.log(data)})
+
         navigate(from, { replace: true })
         toast.success('login successful')
       })
@@ -54,8 +82,8 @@ const Login = () => {
   return (
     <div className=' w-3/5 xl:px-8 mx-auto'>
       {/* title tag component */}
-      <HeadTitle title="Login"/>
-      
+      <HeadTitle title="Login" />
+
       <div className=" rounded shadow-2xl p-7 xl:px-8 ">
         <h1 className="text-3xl font-bold text-center py-5 ">Login</h1>
 
@@ -98,9 +126,16 @@ const Login = () => {
             </div>
           </div>
 
+          <select
+            className="select w-full my-5 focus:border-blue-300 focus:outline-none focus:shadow-outline border-gray-300"
+            name='select'>
+            <option value={"Buyer"}>Buyer</option>
+            <option>Seller</option>
+          </select>
+
           <div className='flex items-center justify-center w-full mt-5'>
 
-          <FilledButton btnType={'submit'} btnClassName={"inline-flex items-center justify-center w-2/4 h-12 px-6  mx-auto font-semibold transition duration-200 rounded shadow-md "}> Sign In</FilledButton>
+            <FilledButton btnType={'submit'} btnClassName={"inline-flex items-center justify-center w-2/4 h-12 px-6  mx-auto font-semibold transition duration-200 rounded shadow-md "}> Sign In</FilledButton>
           </div>
         </form>
 
