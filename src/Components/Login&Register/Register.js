@@ -103,7 +103,7 @@ const Register = () => {
                     role,
                   }
                   //  updataing userinfo in database
-                  fetch(`http://localhost:5000/user/${userInfo.email}`, {
+                  fetch(`https://car-seller-server-nine.vercel.app/user/${userInfo.email}`, {
                     method: "PUT",
                     headers: {
                       "content-type": "application/json"
@@ -112,9 +112,9 @@ const Register = () => {
                   })
                     .then(res => res.json())
                     .then(data => {
-                      if(data.data.acknowledged){
+                      if (data.data.acknowledged) {
                         // jwt token setting in local storage
-                        localStorage.setItem('jwt-token',data.jwtToken)
+                        localStorage.setItem('jwt-token', data.jwtToken)
                         toast.success(`${role} created successfully`)
                       }
                     })

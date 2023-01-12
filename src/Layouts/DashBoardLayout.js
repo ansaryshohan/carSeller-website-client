@@ -11,13 +11,13 @@ const DashBoardLayout = () => {
 
   useEffect(() => {
     setLoading(true)
-    fetch(`http://localhost:5000/user/${user?.email}`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data.data.role)
-      setRole(data.data.role)
-      setLoading(false)
-    })
+    fetch(`https://car-seller-server-nine.vercel.app/user/${user?.email}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.data.role)
+        setRole(data.data.role)
+        setLoading(false)
+      })
   }, [user])
   return (
     <div className='md:flex relative min-h-screen'>

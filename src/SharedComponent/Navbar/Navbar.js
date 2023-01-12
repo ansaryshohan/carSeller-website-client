@@ -30,8 +30,8 @@ const Navbar = () => {
 
   return (
     <div className=" uppercase">
-      <div className={stickyNav ? "sticky-nav" : ""}>
-        <div className=" px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen md:px-24 lg:px-8">
+      <div className={stickyNav ? "sticky-nav" : "bg-[#EEF1FF]"}>
+        <div className=" px-2 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen md:px-24 lg:px-8">
           <div className="relative flex items-center justify-between lg:p-1">
             <Link
               to="/"
@@ -57,7 +57,7 @@ const Navbar = () => {
               </li>
               <li className='dropdown'>
                 <NavLink
-                  to=""
+                  to="#"
                   aria-label="Our product"
                   title="Our product"
                   className="font-medium tracking-wide text-[#6D67E4] transition-colors duration-200 hover:text-teal-accent-400"

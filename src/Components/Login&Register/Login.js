@@ -22,7 +22,7 @@ const Login = () => {
     const password = form.password.value;
     setGivenEmail(email)
 
-    fetch(`http://localhost:5000/user/${email}`)
+    fetch(`https://car-seller-server-nine.vercel.app/user/${email}`)
       .then(res => res.json())
       .then(data => {
         if (data.data.role === role) {
@@ -62,7 +62,7 @@ const Login = () => {
           userName: result.user.displayName,
           userImage: result.user.photoURL,
         }
-        fetch(`http://localhost:5000/user/${result.user.email}`, {
+        fetch(`https://car-seller-server-nine.vercel.app/user/${result.user.email}`, {
           method: "PUT",
           headers: {
             "content-type": "application/json"
@@ -70,7 +70,7 @@ const Login = () => {
           body: JSON.stringify(userDocument)
         })
           .then(res => res.json())
-          .then(data=>{console.log(data)})
+          .then(data => { console.log(data) })
 
         navigate(from, { replace: true })
         toast.success('login successful')
