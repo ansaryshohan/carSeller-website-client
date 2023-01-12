@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 import logo from '../car icon-16.png'
 
@@ -8,10 +8,14 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
   const [stickyNav, setStickyNav] = useState(false);
+  const navigate = useNavigate()
 
   const handleLogOut = () => {
     logOut()
-      .then(() => { toast.success('logOut succesfull') })
+      .then(() => {
+        toast.success('logOut succesfull')
+        navigate('/login')
+      })
       .catch(err => { toast.error(err) })
   }
 
@@ -51,15 +55,21 @@ const Navbar = () => {
                   Home
                 </NavLink>
               </li>
-              <li>
+              <li className='dropdown'>
                 <NavLink
-                  to="/products"
+                  to=""
                   aria-label="Our product"
                   title="Our product"
                   className="font-medium tracking-wide text-[#6D67E4] transition-colors duration-200 hover:text-teal-accent-400"
+                  tabIndex={0}
                 >
                   Product
                 </NavLink>
+                <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-[#EEF1FF] rounded-box w-52 z-20">
+                  <li><Link to='/microbus'>Micro Buses</Link></li>
+                  <li><Link to='/luxurycar'>Luxury Cars</Link></li>
+                  <li><Link to='/electriccar'>Electric Cars</Link></li>
+                </ul>
               </li>
               <li>
                 <NavLink
