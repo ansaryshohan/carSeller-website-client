@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import SingleCar from '../Home/ProductSection/SingleCar';
+import ModalCard from './ModalCard';
 
 const Microbus = () => {
   const [microBusData, setMicroBusData] = useState([])
+  const[productInfo,setProductInfo]=useState({})
 
   useEffect(() => {
     fetch('https://car-seller-server-nine.vercel.app/products')
@@ -21,11 +23,13 @@ const Microbus = () => {
         {
           microBusData.map(car => <SingleCar
             key={car._id}
-            car={car}>
+            car={car}
+            setProductInfo={setProductInfo}>
 
           </SingleCar>)
         }
       </div>
+      <ModalCard productInfo={productInfo}></ModalCard>
     </div>
   );
 };

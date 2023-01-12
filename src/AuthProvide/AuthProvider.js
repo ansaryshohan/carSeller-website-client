@@ -9,6 +9,7 @@ const AuthProvider = ({children}) => {
   const GoogleProvider = new GoogleAuthProvider(auth)
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const[userRole,setUserRole]=useState("")
 
   const createUser = (email, password) => {
     setLoading(true)
@@ -44,6 +45,12 @@ const AuthProvider = ({children}) => {
     return () => unsubscribe()
   }, [])
 
+  useEffect(()=>{
+    fetch(`https://car-seller-server-nine.vercel.app/user/${user.email}`)
+    .then(res => res.json())
+    .then(data => setUserRole(data.data.role))
+  },[user])
+
   const authInfo = {
     user,
     loading,
@@ -52,7 +59,8 @@ const AuthProvider = ({children}) => {
     login,
     googleSignUp,
     forgetPassword,
-    logOut
+    logOut,
+    userRole
   }
 
   return (

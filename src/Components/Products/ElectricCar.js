@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import SingleCar from '../Home/ProductSection/SingleCar';
+import ModalCard from './ModalCard';
 
 const ElectricCar = () => {
   const [electricCarData, setElectricCarData] = useState([])
+  const[productInfo,setProductInfo]=useState({})
 
 
   useEffect(() => {
@@ -20,11 +22,13 @@ const ElectricCar = () => {
         {
           electricCarData.map(car => <SingleCar
             key={car._id}
-            car={car}>
+            car={car}
+            setProductInfo={setProductInfo}>
 
           </SingleCar>)
         }
       </div>
+      <ModalCard productInfo={productInfo}></ModalCard>
     </div>
   );
 };
