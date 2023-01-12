@@ -16,7 +16,7 @@ const Navbar = () => {
   }
 
   const handleStickyNav = () => {
-    if (window.scrollY >= 130) {
+    if (window.scrollY >= 200) {
       setStickyNav(true);
     } else {
       setStickyNav(false);
