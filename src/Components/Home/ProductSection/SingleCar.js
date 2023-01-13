@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaUser } from 'react-icons/fa';
-import FilledButton from '../../../SharedComponent/Buttons/FilledButton';
+import { AuthContext } from '../../../AuthProvide/AuthProvider';
 
 
-const SingleCar = ({ car,setProductInfo }) => {
+
+const SingleCar = ({ car, setProductInfo }) => {
+  const { userRole } = useContext(AuthContext)
   const { product_name, img, description, original_price, selling_price, location, years_of_use, seller_name, status, posting_time, sellerImage } = car;
+
+
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <figure className="px-10 pt-10">
@@ -46,13 +50,18 @@ const SingleCar = ({ car,setProductInfo }) => {
         </div>
 
         <div className="card-actions">
-          <label
-           htmlFor="booking-modal"
-            className="btn py-2 px-2 rounded-xl mt-6 btn-success text-white  lg:w-40 font-medium lg:font-bold bg-gradient-to-r from-[#4776E6] to-[#8E54E9]  hover:text-[#] border-[#4776E6] hover:border-[#4776E6]"
-            onClick={()=>setProductInfo({product_name,selling_price})}>
-              Buy Now</label>
+          {userRole && userRole=== 'Buyer' ?
+            <label
+              htmlFor="booking-modal"
+              className="btn py-2 px-2 rounded-xl mt-6 btn-success text-white  lg:w-40 font-medium lg:font-bold bg-gradient-to-r from-[#4776E6] to-[#8E54E9]  hover:text-[#] border-[#4776E6] hover:border-[#4776E6]"
+              onClick={() => setProductInfo({ product_name, selling_price })}>
+              Buy Now
+            </label>
+            :
+            <button
+            className="btn py-2 px-2 rounded-xl mt-6 btn-success text-white  lg:w-80 font-medium lg:font-bold bg-gradient-to-r from-[#4776E6] to-[#8E54E9]  hover:text-[#] border-[#4776E6] hover:border-[#4776E6] cursor-not-allowed"> need a buyer account</button>
+          }
         </div>
-       
       </div>
     </div>
   );

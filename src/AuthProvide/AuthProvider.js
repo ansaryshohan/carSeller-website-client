@@ -46,10 +46,12 @@ const AuthProvider = ({children}) => {
   }, [])
 
   useEffect(()=>{
-    fetch(`https://car-seller-server-nine.vercel.app/user/${user.email}`)
+    fetch(`https://car-seller-server-nine.vercel.app/user/${user?.email}`)
     .then(res => res.json())
-    .then(data => setUserRole(data.data.role))
+    .then(data => setUserRole(data?.data?.role))
   },[user])
+
+  // console.log(userRole)
 
   const authInfo = {
     user,
