@@ -52,7 +52,7 @@ const Sidebar = ({ role}) => {
           }  md:translate-x-0  transition duration-200 ease-in-out`}
       >
         <div>
-          {/* Profile Info */}
+          {/* User Profile Info */}
           <div>
             <h2 className='text-3xl cursor-pointer font-semibold text-center text-gray-800 '>
               <Link to='/'
@@ -85,7 +85,7 @@ const Sidebar = ({ role}) => {
             </div>
           </div>
 
-          {/* Nav Items */}
+          {/* NavBar Items */}
           <div className='flex flex-col justify-between flex-1 mt-6'>
             <nav>
               {

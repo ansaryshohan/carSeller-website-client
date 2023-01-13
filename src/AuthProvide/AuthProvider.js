@@ -46,9 +46,11 @@ const AuthProvider = ({children}) => {
   }, [])
 
   useEffect(()=>{
+    setLoading(true)
     fetch(`https://car-seller-server-nine.vercel.app/user/${user?.email}`)
     .then(res => res.json())
     .then(data => setUserRole(data?.data?.role))
+    setLoading(false)
   },[user])
 
   // console.log(userRole)

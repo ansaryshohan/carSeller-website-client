@@ -11,20 +11,21 @@ import PrivateRouter from "./PrivateRouter";
 import ElectricCar from "../Components/Products/ElectricCar";
 import LuxuryCar from "../Components/Products/LuxuryCar";
 import Microbus from "../Components/Products/Microbus";
+import MyOrders from "../Components/DashBoardTopics/MyOrders";
 
 export const router = createBrowserRouter([
   {
     path:'/',
-    element: <Main></Main>,
-    errorElement:<ErrorPage></ErrorPage>,
+    element: <Main/>,
+    errorElement:<ErrorPage/>,
     children:[
       {
         path:"/",
-        element:<Home></Home>
+        element:<Home/>
       },
       {
         path:"/home",
-        element:<Home></Home>
+        element:<Home/>
       },
       {
         path:"/microbus",
@@ -40,15 +41,15 @@ export const router = createBrowserRouter([
       },
       {
         path:"/login",
-        element:<LoginRegisterLayout></LoginRegisterLayout>,
+        element:<LoginRegisterLayout/>,
         children:[
           {
             path:'/login',
-            element:<Login></Login>
+            element:<Login/>
           },
           {
             path:'/login/register',
-            element:<Register></Register>
+            element:<Register/>
           }
         ]
       }
@@ -56,16 +57,16 @@ export const router = createBrowserRouter([
   },
   {
     path:"/dashboard",
-    element:<PrivateRouter><DashBoardLayout></DashBoardLayout></PrivateRouter>,
+    element:<PrivateRouter><DashBoardLayout/></PrivateRouter>,
     children:[
       {
         path:'/dashboard',
-        element:<PrivateRouter><DashBoard></DashBoard></PrivateRouter>
+        element:<PrivateRouter><DashBoard/></PrivateRouter>
       },
-      // {
-      //   path:'/login/register',
-      //   element:<Register></Register>
-      // }
+      {
+        path:'/dashboard/myorders',
+        element:<PrivateRouter><MyOrders/></PrivateRouter>
+      }
     ]
   }
 ])

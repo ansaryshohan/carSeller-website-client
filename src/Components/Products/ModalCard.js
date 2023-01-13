@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 
 const ModalCard = ({ productInfo }) => {
-  const { product_name, selling_price } = productInfo;
+  const { product_name, selling_price,productImage } = productInfo;
   const { user,userRole } = useContext(AuthContext);
   const todayDate  = new Date();
   const userName= user?.displayName;
@@ -21,8 +21,9 @@ const ModalCard = ({ productInfo }) => {
       phone,
       location,
       todayDate,
+      productImage,
     }
-   if(userRole==='buyer'){
+   if(userRole==='Buyer'){
     fetch('http://localhost:5000/booking',{
       method:"POST",
       headers:{

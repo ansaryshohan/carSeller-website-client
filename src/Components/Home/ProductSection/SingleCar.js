@@ -54,7 +54,7 @@ const SingleCar = ({ car, setProductInfo }) => {
             <label
               htmlFor="booking-modal"
               className="btn py-2 px-2 rounded-xl mt-6 btn-success text-white  lg:w-40 font-medium lg:font-bold bg-gradient-to-r from-[#4776E6] to-[#8E54E9]  hover:text-[#] border-[#4776E6] hover:border-[#4776E6]"
-              onClick={() => setProductInfo({ product_name, selling_price })}>
+              onClick={() => setProductInfo({ product_name, selling_price,productImage:img })}>
               Buy Now
             </label>
             :

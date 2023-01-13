@@ -6,7 +6,7 @@ const BuyerDashBoard = () => {
   return (
     <div>
       <NavLink
-        to='/myorders'
+        to='/dashboard/myorders'
         className={({ isActive }) =>
           `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform ${isActive ? 'active' : 'text-[#6D67E4]'
           }`
