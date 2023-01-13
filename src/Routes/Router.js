@@ -13,6 +13,7 @@ import LuxuryCar from "../Components/Products/LuxuryCar";
 import Microbus from "../Components/Products/Microbus";
 import MyOrders from "../Components/DashBoardTopics/MyOrders";
 import AddAProduct from "../Components/DashBoardTopics/AddAProduct";
+import MyProducts from "../Components/DashBoardTopics/MyProducts";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/addaproduct',
         element:<PrivateRouter><AddAProduct/></PrivateRouter>
+      },
+      {
+        path:'/dashboard/myproduct',
+        element:<PrivateRouter><MyProducts/></PrivateRouter>
       }
     ]
   }

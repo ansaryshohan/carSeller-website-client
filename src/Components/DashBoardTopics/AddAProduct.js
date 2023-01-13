@@ -13,11 +13,14 @@ const AddAProduct = () => {
     const productName = form.productName.value;
     const purchase = form.purchase.value;
     const selling = form.selling.value;
-    const userYears = form.userYears.value;
+    const usedYears = form.usedYears.value;
     const postingDate = form.postingDate.value;
     const description = form.description.value;
+    const location = form.location.value;
     const sellerEmail = user.email;
 
+    // console.log(postingDate, productName, purchase, sellerEmail, selling, usedYears, location)
+// image adding to imgbb
     const image = form.image.files[0];
     const formData = new FormData()
     formData.append('image', image)
@@ -29,30 +32,39 @@ const AddAProduct = () => {
       })
       .then(res => res.json())
       .then(photoData => {
-        const productData = {
-          productName,
-          purchase_price: purchase,
-          selling_price: selling,
-          userYears,
-          description,
-          postingDate,
-          sellerEmail,
-          productPhoto:photoData.data.display_url,
-        }
-        fetch('http://localhost:5000/addedProduct',{
-          method:"POST",
-          headers:{
-            "content-type":"application/json"
-          },
-          body:JSON.stringify(photoData)  
-        })
-        .then(res=>res.json())
-        .then(data=>{
-          if(data.data.acknowledged){
-            toast.success('Product Added successfully');
-            form.reset()
+       
+// product data posting in the database.
+        if (photoData.success) {
+          const productData = {
+            productName,
+            purchase_price: purchase,
+            selling_price: selling,
+            usedYears,
+            description,
+            postingDate,
+            sellerEmail,
+            location,
+            productPhoto: photoData.data.display_url,
           }
-        })
+          fetch('http://localhost:5000/addedProduct', {
+            method: "POST",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify(productData)
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data)
+              if (data.data.acknowledged) {
+                toast.success('Product Added successfully');
+                form.reset()
+              }
+            })
+        }
+        else{
+          toast.error('please provide a valid photo')
+        }
       })
   }
 
@@ -65,7 +77,7 @@ const AddAProduct = () => {
         <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
           <div className="grid grid-cols-6 gap-4 col-span-full ">
             <div className="col-span-full ">
-              <label for="productName" className="text-sm ml-2">Product Name</label>
+              <label htmlFor="productName" className="text-sm ml-2">Product Name</label>
               <input
                 id="productName"
                 name='productName'
@@ -75,7 +87,7 @@ const AddAProduct = () => {
               />
             </div>
             <div className="col-span-full ">
-              <label for="image" className="text-sm ml-2">Product Image</label>
+              <label htmlFor="image" className="text-sm ml-2">Product Image</label>
               <input
                 id="image"
                 type="file"
@@ -83,7 +95,7 @@ const AddAProduct = () => {
                 className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400  p-1 pl-3 flex-grow  h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300  shadow-sm appearance-none focus:border-blue-300 focus:outline-none focus:shadow-outline pt-2" />
             </div>
             <div className="col-span-full lg:col-span-3 ">
-              <label for="purchase" className="text-sm ml-2">Purchased Price</label>
+              <label htmlFor="purchase" className="text-sm ml-2">Purchased Price</label>
               <input
                 id="purchase"
                 name='purchase'
@@ -92,7 +104,7 @@ const AddAProduct = () => {
                 className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400  p-1 pl-3" />
             </div>
             <div className="col-span-full  lg:col-span-3">
-              <label for="selling" className="text-sm ml-2">Selling Price</label>
+              <label htmlFor="selling" className="text-sm ml-2">Selling Price</label>
               <input
                 id="selling"
                 name='selling'
@@ -101,16 +113,16 @@ const AddAProduct = () => {
                 className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400  p-1 pl-3" />
             </div>
             <div className="col-span-full lg:col-span-3 ">
-              <label for="usedYears" className="text-sm ml-2">Year of use</label>
+              <label htmlFor="usedYears" className="text-sm ml-2">Year of use</label>
               <input
                 id="usedYears"
-                name='userYears'
+                name='usedYears'
                 type="text"
                 placeholder="year of use"
                 className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400  p-1 pl-3" />
             </div>
             <div className="col-span-full  lg:col-span-3">
-              <label for="postingDate" className="text-sm ml-2">Posting Date</label>
+              <label htmlFor="postingDate" className="text-sm ml-2">Posting Date</label>
               <input
                 id="postingDate"
                 name='postingDate'
@@ -118,10 +130,18 @@ const AddAProduct = () => {
                 value={new Date()}
                 className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400  p-1 pl-3" disabled />
             </div>
+            <div className="col-span-full  ">
+              <label htmlFor="location" className="text-sm ml-2">Location</label>
+              <input
+                id="location"
+                name='location'
+                type="text"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400  p-1 pl-3" />
+            </div>
 
           </div>
           <div className="col-span-full">
-            <label for="bio" className="text-sm">Product Details</label>
+            <label htmlFor="bio" className="text-sm">Product Details</label>
             <textarea
               id="bio"
               name='description'
