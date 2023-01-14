@@ -7,6 +7,7 @@ const AddAProduct = () => {
   const { user } = useContext(AuthContext)
   const imgbbUrl = "https://api.imgbb.com/1/upload?key=33925baffb85e91b514a5e50db64550e"
 
+
   const handleOnSubmit = (event) => {
     event.preventDefault()
     const form = event.target;
@@ -20,7 +21,7 @@ const AddAProduct = () => {
     const sellerEmail = user.email;
 
     // console.log(postingDate, productName, purchase, sellerEmail, selling, usedYears, location)
-// image adding to imgbb
+    // image adding to imgbb
     const image = form.image.files[0];
     const formData = new FormData()
     formData.append('image', image)
@@ -32,8 +33,8 @@ const AddAProduct = () => {
       })
       .then(res => res.json())
       .then(photoData => {
-       
-// product data posting in the database.
+
+        // product data posting in the database.
         if (photoData.success) {
           const productData = {
             productName,
@@ -46,7 +47,7 @@ const AddAProduct = () => {
             location,
             productPhoto: photoData.data.display_url,
           }
-          fetch('http://localhost:5000/addedProduct', {
+          fetch('https://car-seller-server-nine.vercel.app/addedProduct', {
             method: "POST",
             headers: {
               "content-type": "application/json"
@@ -62,7 +63,7 @@ const AddAProduct = () => {
               }
             })
         }
-        else{
+        else {
           toast.error('please provide a valid photo')
         }
       })

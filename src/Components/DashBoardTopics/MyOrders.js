@@ -1,19 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
+import Spinner from '../../SharedComponent/Spinner/Spinner';
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext)
-  const { isLoading, refetch, data: bookingData } = useQuery({
+  const { isLoading, data: bookingData } = useQuery({
     queryKey: ['bookingData'],
     queryFn: () =>
-      fetch(`http://localhost:5000/bookings/${user.email}`)
+      fetch(`https://car-seller-server-nine.vercel.app/bookings/${user.email}`)
         .then(res => res.json())
 
   })
   // console.log(resData)
 
-  if (isLoading) return 'Loading...'
+  if (isLoading) return <Spinner/>
 
 
   return (
@@ -35,11 +36,11 @@ const MyOrders = () => {
           </thead>
           <tbody>
             {
-              bookingData.data.map((booking,i) =>
+              bookingData.data.map((booking, i) =>
                 <tr key={booking._id}>
                   <th>
                     <label>
-                        {i+1}.
+                      {i + 1}.
                     </label>
                   </th>
                   <td>

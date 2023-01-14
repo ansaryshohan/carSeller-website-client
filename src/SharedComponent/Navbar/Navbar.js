@@ -57,7 +57,7 @@ const Navbar = () => {
               </li>
               <li className='dropdown'>
                 <NavLink
-                  to="#"
+                  to="/"
                   aria-label="Our product"
                   title="Our product"
                   className="font-medium tracking-wide text-[#6D67E4] transition-colors duration-200 hover:text-teal-accent-400"

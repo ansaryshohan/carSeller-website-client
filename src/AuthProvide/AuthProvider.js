@@ -1,15 +1,15 @@
 import React, { createContext, useEffect, useState } from 'react';
 import app from '../Firebase/Firebase.config';
-import {createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
 
-export const AuthContext= createContext()
-const auth= getAuth(app);
+export const AuthContext = createContext()
+const auth = getAuth(app);
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
   const GoogleProvider = new GoogleAuthProvider(auth)
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
-  const[userRole,setUserRole]=useState("")
+  const [userRole, setUserRole] = useState("")
 
   const createUser = (email, password) => {
     setLoading(true)
@@ -45,19 +45,23 @@ const AuthProvider = ({children}) => {
     return () => unsubscribe()
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     setLoading(true)
     fetch(`https://car-seller-server-nine.vercel.app/user/${user?.email}`)
-    .then(res => res.json())
-    .then(data => setUserRole(data?.data?.role))
-    setLoading(false)
-  },[user])
+      .then(res => res.json())
+      .then(data => {
+        setUserRole(data?.data?.role)
+        setLoading(false)
+      })
+
+  }, [user])
 
   // console.log(userRole)
 
   const authInfo = {
     user,
     loading,
+    setLoading,
     createUser,
     updateProfileInfo,
     login,
@@ -68,9 +72,9 @@ const AuthProvider = ({children}) => {
   }
 
   return (
-      <AuthContext.Provider value={authInfo}>
-        {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

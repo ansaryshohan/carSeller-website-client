@@ -14,6 +14,9 @@ import Microbus from "../Components/Products/Microbus";
 import MyOrders from "../Components/DashBoardTopics/MyOrders";
 import AddAProduct from "../Components/DashBoardTopics/AddAProduct";
 import MyProducts from "../Components/DashBoardTopics/MyProducts";
+import AllUsers from "../Components/DashBoardTopics/AllUsers";
+import Buyers from "../Components/DashBoardTopics/Buyers";
+import Sellers from "../Components/DashBoardTopics/Sellers";
 
 export const router = createBrowserRouter([
   {
@@ -63,20 +66,32 @@ export const router = createBrowserRouter([
     children:[
       {
         path:'/dashboard',
-        element:<PrivateRouter><DashBoard/></PrivateRouter>
+        element:<DashBoard/>
       },
       {
         path:'/dashboard/myorders',
-        element:<PrivateRouter><MyOrders/></PrivateRouter>
+        element:<MyOrders/>
       },
       {
         path:'/dashboard/addaproduct',
-        element:<PrivateRouter><AddAProduct/></PrivateRouter>
+        element:<AddAProduct/>
       },
       {
         path:'/dashboard/myproduct',
-        element:<PrivateRouter><MyProducts/></PrivateRouter>
-      }
+        element:<MyProducts/>
+      },
+      {
+        path:'/dashboard/allusers',
+        element:<AllUsers/>
+      },
+      {
+        path:'/dashboard/buyers',
+        element:<Buyers/>
+      },
+      {
+        path:'/dashboard/sellers',
+        element:<Sellers/>
+      },
     ]
   }
 ])

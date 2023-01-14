@@ -6,7 +6,7 @@ const AdminDashBoard = () => {
   return (
     <>
       <NavLink
-        to='/allusers'
+        to='/dashboard/allusers'
         className={({ isActive }) =>
           `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform ${
             isActive ? 'active' : 'text-[#6D67E4]'
@@ -19,7 +19,19 @@ const AdminDashBoard = () => {
       </NavLink>
 
       <NavLink
-        to='/allsellers'
+        to='/dashboard/buyers'
+        className={({ isActive }) =>
+          `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform ${
+            isActive ? 'active' : 'text-[#6D67E4]'
+          }`
+        }
+      >
+        <FaFingerprint className='w-5 h-5' />
+
+        <span className='mx-4 font-medium'>All Buyers</span>
+      </NavLink>
+      <NavLink
+        to='/dashboard/sellers'
         className={({ isActive }) =>
           `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform ${
             isActive ? 'active' : 'text-[#6D67E4]'

@@ -44,13 +44,14 @@ const Login = () => {
         }
       })
   }
-  const handleForgetPassword = () => {
 
-    //  forgetPassword handling
-    forgetPassword(givenEmail)
+  // forget password handling
+  const handleForgetPassword = () => {
+     forgetPassword(givenEmail)
       .then(() => { alert('password reset email is sent to your email') })
       .catch(err => { toast.error(`${err}`) })
   }
+  
   // handling google login 
   const handleGoogleSignUp = () => {
     googleSignUp()
@@ -131,6 +132,7 @@ const Login = () => {
             name='select'>
             <option value={"Buyer"}>Buyer</option>
             <option>Seller</option>
+            <option>Admin</option>
           </select>
 
           <div className='flex items-center justify-center w-full mt-5'>

@@ -9,18 +9,18 @@ import SellerDashBoard from './SellerDashBoard'
 import BuyerDashBoard from './BuyerDashBoard'
 
 
-const Sidebar = ({ role}) => {
-  const { user, logOut } = useContext(AuthContext)
+const Sidebar = () => {
+  const { user, logOut, userRole } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState('false')
-  const navigate= useNavigate()
- 
+  const navigate = useNavigate()
+
   // Sidebar responsiveness handling
   const handleToggle = () => {
     setIsOpen(!isOpen)
   }
 
-  const handleLogOut=()=>{
-     logOut()
+  const handleLogOut = () => {
+    logOut()
     navigate('/home')
   }
 
@@ -55,8 +55,8 @@ const Sidebar = ({ role}) => {
           {/* User Profile Info */}
           <div>
             <h2 className='text-3xl cursor-pointer font-semibold text-center text-gray-800 '>
-              <Link to='/'
-              className='flex items-center justify-center'>
+              <Link to='/dashboard'
+                className='flex items-center justify-center'>
                 <img src={logo} alt="" className=' w-2/6 ' />
                 <span className="ml-2 text-2xl font-bold tracking-wide text-[#6D67E4] uppercase">
                   car<span className='text-[#8E54E9]'>seller</span>
@@ -64,24 +64,21 @@ const Sidebar = ({ role}) => {
               </Link>
             </h2>
             <div className='flex flex-col items-center mt-6 -mx-2'>
-              <Link to='/dashboard'>
-                <img
-                  className='object-cover w-24 h-24 mx-2 rounded-full'
-                  src={user?.photoURL}
-                  alt='avatar'
-                  referrerPolicy='no-referrer'
-                />
-              </Link>
-              <Link to='/dashboard'>
-                <h4 className='mx-2 mt-2 font-medium text-gray-800  hover:underline'>
-                  {user?.displayName}
-                </h4>
-              </Link>
-              <Link to='/dashboard'>
-                <p className='mx-2 mt-1 text-sm font-medium text-gray-600  hover:underline'>
-                  {user?.email}
-                </p>
-              </Link>
+
+              <img
+                className='object-cover w-24 h-24 mx-2 rounded-full'
+                src={user?.photoURL}
+                alt='avatar'
+              />
+
+              <h4 className='mx-2 mt-2 font-medium text-gray-800 '>
+                {user?.displayName}
+              </h4>
+
+              <p className='mx-2 mt-1 text-sm font-medium text-gray-600 '>
+                {user?.email}
+              </p>
+
             </div>
           </div>
 
@@ -89,9 +86,9 @@ const Sidebar = ({ role}) => {
           <div className='flex flex-col justify-between flex-1 mt-6'>
             <nav>
               {
-                role === 'admin' ? <AdminDashBoard />
+                userRole === 'Admin' ? <AdminDashBoard />
                   :
-                  role === 'Seller' ? <SellerDashBoard />
+                  userRole === 'Seller' ? <SellerDashBoard />
                     :
                     <BuyerDashBoard />
               }
@@ -101,14 +98,14 @@ const Sidebar = ({ role}) => {
 
         <div>
           <hr />
-          <Link 
-          onClick={handleLogOut}>
-          <FilledButton
-            btnClassName={"flex block w-full rounded-full items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform"}>
+          <Link
+            onClick={handleLogOut}>
+            <FilledButton
+              btnClassName={"flex block w-full rounded-full items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform"}>
 
-            <span className='mx-4 font-medium'>Logout</span>
-            <FaArrowRight className='w-5 h-5' />
-          </FilledButton>
+              <span className='mx-4 font-medium'>Logout</span>
+              <FaArrowRight className='w-5 h-5' />
+            </FilledButton>
           </Link>
         </div>
       </div>

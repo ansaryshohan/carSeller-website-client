@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFileAlt, FaFileExport, FaFingerprint, FaProductHunt } from 'react-icons/fa';
+import { FaFileAlt, FaFileExport } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 
 const SellerDashBoard = () => {
