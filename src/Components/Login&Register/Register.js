@@ -112,9 +112,10 @@ const Register = () => {
                   })
                     .then(res => res.json())
                     .then(data => {
-                      if (data.data.acknowledged) {
+                      
+                      if (data?.data.result.acknowledged) {
                         // jwt token setting in local storage
-                        localStorage.setItem('jwt-token', data?.data?.result?.jwtToken)
+                        localStorage.setItem('jwt-token', data.data.jwtToken)
                         toast.success(`${role} created successfully`)
                       }
                     })

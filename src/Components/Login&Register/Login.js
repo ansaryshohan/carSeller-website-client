@@ -25,7 +25,7 @@ const Login = () => {
     fetch(`https://car-seller-server-nine.vercel.app/user/${email}`)
       .then(res => res.json())
       .then(data => {
-        if (data.data.role === role) {
+        if (data?.data.role === role) {
 
           // email and password login
           login(email, password)
