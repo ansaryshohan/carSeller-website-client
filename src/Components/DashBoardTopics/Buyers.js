@@ -3,11 +3,11 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 
 const Buyers = () => {
-  const { user } = useContext(AuthContext)
+  const { user,userRole } = useContext(AuthContext)
   const { isLoading, data: allBuyerData } = useQuery({
     queryKey: ['allBuyerData'],
     queryFn: () =>
-      fetch(`http://localhost:5000/buyers?email=${user.email}`,{
+      fetch(`http://localhost:5000/buyers?email=${user.email}&role=${userRole}`,{
         headers:{
           authorization:`Bearer ${localStorage.getItem("jwt-token")}`
         }
