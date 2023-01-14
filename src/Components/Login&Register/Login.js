@@ -31,21 +31,28 @@ const Login = () => {
           login(email, password)
             .then(res => {
                 const user= res.user;
+                // document data for user login jwt
+                const userDocument = {
+                  email: data.data.email,
+                  role: data.data.role,
+                  userName: data.data.userName,
+                  userImage: data.data.userImage,
+                }
               // jwt token setting
               fetch(`https://car-seller-server-nine.vercel.app/user/${user.email}`, {
                     method: "PUT",
                     headers: {
                       "content-type": "application/json"
                     },
-                    body: JSON.stringify(data.data)
+                    body: JSON.stringify(userDocument)
                   })
                 .then(res => res.json())
                 .then(data => {
                   localStorage.setItem("jwt-token", data.data.jwtToken)
+                  // navigating after token is set in the local storage
+                  navigate(from, { replace: true })
+                  toast.success('welcome to carSeller')
                 })
-                // navigating after token is set in the local storage
-              navigate(from, { replace: true })
-              toast.success('welcome to carSeller')
             })
             .catch(
               err => toast.error(`${err}`)
