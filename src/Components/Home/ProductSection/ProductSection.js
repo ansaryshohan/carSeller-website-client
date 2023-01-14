@@ -11,7 +11,7 @@ const ProductSection = () => {
     fetch('https://car-seller-server-nine.vercel.app/products')
       .then(res => res.json())
       .then(data => {
-        setLuxuryCarData(data.data.luxuryCar)
+        setLuxuryCarData(data.data.threeCar)
       })
   }, [])
 
@@ -20,7 +20,7 @@ const ProductSection = () => {
       <h1 className='text-center text-3xl py-16 font-bold'>Our Products</h1>
       <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 mx-auto'>
         {
-          luxuryCarData.map(car => <SingleCar
+          luxuryCarData?.map(car => <SingleCar
             key={car._id}
             car={car}
             setProductInfo={setProductInfo}>

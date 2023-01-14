@@ -17,6 +17,7 @@ import MyProducts from "../Components/DashBoardTopics/MyProducts";
 import AllUsers from "../Components/DashBoardTopics/AllUsers";
 import Buyers from "../Components/DashBoardTopics/Buyers";
 import Sellers from "../Components/DashBoardTopics/Sellers";
+import Blog from "../Components/Blog/Blog";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path:"/home",
         element:<Home/>
+      },
+      {
+        path:"/blog",
+        element:<Blog/>
       },
       {
         path:"/microbus",

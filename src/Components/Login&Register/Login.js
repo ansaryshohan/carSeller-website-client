@@ -30,8 +30,20 @@ const Login = () => {
           // email and password login
           login(email, password)
             .then(res => {
-              const user = res.user;
-              console.log(user);
+                const user= res.user;
+              // jwt token setting
+              fetch(`https://car-seller-server-nine.vercel.app/user/${user.email}`, {
+                    method: "PUT",
+                    headers: {
+                      "content-type": "application/json"
+                    },
+                    body: JSON.stringify(data.data)
+                  })
+                .then(res => res.json())
+                .then(data => {
+                  localStorage.setItem("jwt-token", data.data.jwtToken)
+                })
+                // navigating after token is set in the local storage
               navigate(from, { replace: true })
               toast.success('welcome to carSeller')
             })
@@ -47,11 +59,11 @@ const Login = () => {
 
   // forget password handling
   const handleForgetPassword = () => {
-     forgetPassword(givenEmail)
+    forgetPassword(givenEmail)
       .then(() => { alert('password reset email is sent to your email') })
       .catch(err => { toast.error(`${err}`) })
   }
-  
+
   // handling google login 
   const handleGoogleSignUp = () => {
     googleSignUp()
@@ -71,7 +83,9 @@ const Login = () => {
           body: JSON.stringify(userDocument)
         })
           .then(res => res.json())
-          .then(data => { console.log(data) })
+          .then(data => {
+            localStorage.setItem("jwt-token", data.data.jwtToken)
+          })
 
         navigate(from, { replace: true })
         toast.success('login successful')

@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 import FilledButton from '../../SharedComponent/Buttons/FilledButton';
 
 const AddAProduct = () => {
   const { user } = useContext(AuthContext)
+  const navigate= useNavigate()
   const imgbbUrl = "https://api.imgbb.com/1/upload?key=33925baffb85e91b514a5e50db64550e"
 
 
@@ -18,7 +20,10 @@ const AddAProduct = () => {
     const postingDate = form.postingDate.value;
     const description = form.description.value;
     const location = form.location.value;
+    const category = form.category.value;
     const sellerEmail = user.email;
+    const seller_name = user.displayName;
+
 
     // console.log(postingDate, productName, purchase, sellerEmail, selling, usedYears, location)
     // image adding to imgbb
@@ -37,15 +42,18 @@ const AddAProduct = () => {
         // product data posting in the database.
         if (photoData.success) {
           const productData = {
-            productName,
-            purchase_price: purchase,
-            selling_price: selling,
-            usedYears,
+            product_name: productName,
+            category,
+            img: photoData.data.display_url,
             description,
-            postingDate,
-            sellerEmail,
+            original_price: purchase,
+            selling_price: selling,
             location,
-            productPhoto: photoData.data.display_url,
+            years_of_use: usedYears,
+            seller_name,
+            posting_time: postingDate,
+            sellerEmail,
+            status:"unsold"
           }
           fetch('https://car-seller-server-nine.vercel.app/addedProduct', {
             method: "POST",
@@ -60,6 +68,7 @@ const AddAProduct = () => {
               if (data.data.acknowledged) {
                 toast.success('Product Added successfully');
                 form.reset()
+                navigate("/dashboard/myproduct")
               }
             })
         }
@@ -94,6 +103,17 @@ const AddAProduct = () => {
                 type="file"
                 name='image'
                 className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400  p-1 pl-3 flex-grow  h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300  shadow-sm appearance-none focus:border-blue-300 focus:outline-none focus:shadow-outline pt-2" />
+            </div>
+            <div className="col-span-full ">
+              <label htmlFor="category" className="text-sm ml-2">Product Category</label>
+              <select
+                id='category'
+                className="select w-full my-5 focus:border-blue-300 focus:outline-none focus:shadow-outline border-gray-300"
+                name='category'>
+                <option value={"Micro Buses"}>Micro Buses</option>
+                <option>Luxury Cars</option>
+                <option>Electric Cars</option>
+              </select>
             </div>
             <div className="col-span-full lg:col-span-3 ">
               <label htmlFor="purchase" className="text-sm ml-2">Purchased Price</label>

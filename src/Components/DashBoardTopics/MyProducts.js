@@ -27,9 +27,9 @@ const MyProducts = () => {
               <th></th>
               <th>Product</th>
               <th>Price</th>
-              <th>Location</th>
-              <th>Posting Time</th>
+              <th>Location</th>             
               <th>Year of Use</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -46,21 +46,22 @@ const MyProducts = () => {
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                          <img src={product.productPhoto} alt="Avatar Tailwind CSS Component" />
+                          <img src={product.img} alt="Avatar Tailwind CSS Component" />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">{product.productName}</div>
+                        <div className="font-bold">{product.product_name}</div>
+                        <div className="font-normal">{product.category}</div>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <div>purchase price:  $ <span className='line-through'>{product.purchase_price}</span></div>
+                    <div>purchase price:  $ <span className='line-through'>{product.original_price}</span></div>
                     <div className='text-xl font-semibold'>Selling price:  ${product.selling_price}</div>
                   </td>
                   <td>{product.location}</td>
-                  <td>{product.postingDate.split("G")[0]}</td>
-                  <td>{product.usedYears}</td>
+                  <td>{product.years_of_use}</td>
+                  <td>{product.status}</td>
                   <th>
                     <button className="btn btn-info btn-xs mr-3">Advertise</button>
                     <button className="btn btn-error btn-xs">Delete Product</button>

@@ -14,6 +14,7 @@ const Navbar = () => {
     logOut()
       .then(() => {
         toast.success('logOut succesfull')
+        localStorage.removeItem("jwt-token")
         navigate('/login')
       })
       .catch(err => { toast.error(err) })
