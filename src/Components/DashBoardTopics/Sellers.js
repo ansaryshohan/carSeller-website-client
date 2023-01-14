@@ -3,13 +3,13 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 
 const Sellers = () => {
-  const { user,userRole } = useContext(AuthContext)
+  const { user, userRole } = useContext(AuthContext)
   const { isLoading, data: allSellerData } = useQuery({
     queryKey: ['allSellerData'],
     queryFn: () =>
-      fetch(`http://localhost:5000/sellers?email=${user.email}&role=${userRole}`,{
-        headers:{
-          authorization:`Bearer ${localStorage.getItem("jwt-token")}`
+      fetch(`https://car-seller-server-nine.vercel.app/sellers?email=${user.email}&role=${userRole}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("jwt-token")}`
         }
       })
         .then(res => res.json())

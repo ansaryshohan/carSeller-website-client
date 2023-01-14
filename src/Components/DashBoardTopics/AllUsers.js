@@ -3,13 +3,13 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 
 const AllUsers = () => {
-  const { user,userRole } = useContext(AuthContext)
+  const { user, userRole } = useContext(AuthContext)
   const { isLoading, data: allUserData } = useQuery({
     queryKey: ['allUserData'],
     queryFn: () =>
-      fetch(`http://localhost:5000/allusers?email=${user.email}&role=${userRole}`,{
-        headers:{
-          authorization:`Bearer ${localStorage.getItem("jwt-token")}`
+      fetch(`https://car-seller-server-nine.vercel.app/allusers?email=${user.email}&role=${userRole}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("jwt-token")}`
         }
       })
         .then(res => res.json())
@@ -62,8 +62,8 @@ const AllUsers = () => {
                   </td>
                   <td>{user.role}</td>
                   <th>
-                   {user.role!=="Admin"? <button className="btn btn-info btn-xs mr-3">Make Admin</button>
-                   : "Admin"}
+                    {user.role !== "Admin" ? <button className="btn btn-info btn-xs mr-3">Make Admin</button>
+                      : "Admin"}
                   </th>
                 </tr>)
             }
