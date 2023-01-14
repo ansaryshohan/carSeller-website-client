@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext)
+  // react query for data fetching
   const { isLoading, refetch, data: productData } = useQuery({
     queryKey: ['productData'],
     queryFn: () =>
@@ -11,7 +13,30 @@ const MyProducts = () => {
         .then(res => res.json())
   })
 
-  // console.log(productData)
+  // advertise button handler
+  const handleAdvetise = () => {
+  }
+
+  // product delete button handler
+  const deleteProduct = (id, productName) => {
+    const confirm = window.confirm('do you want to delete the Product')
+    if (confirm) {
+      fetch(`https://car-seller-server-nine.vercel.app/addedProduct/${id}?productName=${productName}`, {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("jwt-token")}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data.deletedCount > 0) {
+            toast.success('booked product is deleted')
+            refetch()
+          }
+        })
+    }
+  }
+
 
   if (isLoading) return 'Loading...'
 
@@ -27,7 +52,7 @@ const MyProducts = () => {
               <th></th>
               <th>Product</th>
               <th>Price</th>
-              <th>Location</th>             
+              <th>Location</th>
               <th>Year of Use</th>
               <th>Status</th>
               <th>Action</th>
@@ -63,8 +88,12 @@ const MyProducts = () => {
                   <td>{product.years_of_use}</td>
                   <td>{product.status}</td>
                   <th>
-                    <button className="btn btn-info btn-xs mr-3">Advertise</button>
-                    <button className="btn btn-error btn-xs">Delete Product</button>
+                    <button
+                      className="btn btn-info btn-xs mr-3"
+                      onClick={handleAdvetise}>Advertise</button>
+                    <button
+                      className="btn btn-error btn-xs"
+                      onClick={() => deleteProduct(product._id, product.product_name)}>Delete Product</button>
                   </th>
                 </tr>)
             }

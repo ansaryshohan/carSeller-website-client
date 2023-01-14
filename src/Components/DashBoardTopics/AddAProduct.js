@@ -6,7 +6,7 @@ import FilledButton from '../../SharedComponent/Buttons/FilledButton';
 
 const AddAProduct = () => {
   const { user } = useContext(AuthContext)
-  const navigate= useNavigate()
+  const navigate = useNavigate()
   const imgbbUrl = "https://api.imgbb.com/1/upload?key=33925baffb85e91b514a5e50db64550e"
 
 
@@ -53,7 +53,7 @@ const AddAProduct = () => {
             seller_name,
             posting_time: postingDate,
             sellerEmail,
-            status:"unsold"
+            status: "unsold"
           }
           fetch('https://car-seller-server-nine.vercel.app/addedProduct', {
             method: "POST",
@@ -110,9 +110,9 @@ const AddAProduct = () => {
                 id='category'
                 className="select w-full my-5 focus:border-blue-300 focus:outline-none focus:shadow-outline border-gray-300"
                 name='category'>
-                <option value={"Micro Buses"}>Micro Buses</option>
-                <option>Luxury Cars</option>
-                <option>Electric Cars</option>
+                <option value={"Micro Bus"}>Micro Bus</option>
+                <option>Luxury Car</option>
+                <option>Electric Car</option>
               </select>
             </div>
             <div className="col-span-full lg:col-span-3 ">

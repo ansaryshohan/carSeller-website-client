@@ -1,20 +1,46 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 import Spinner from '../../SharedComponent/Spinner/Spinner';
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext)
-  const { isLoading, data: bookingData } = useQuery({
+
+  // query for loading my orders
+  const { isLoading, refetch, data: bookingData } = useQuery({
     queryKey: ['bookingData'],
     queryFn: () =>
       fetch(`https://car-seller-server-nine.vercel.app/bookings/${user.email}`)
         .then(res => res.json())
+  });
 
-  })
-  // console.log(resData)
+  const handlePayNow = () => {
 
-  if (isLoading) return <Spinner/>
+  };
+
+  const deleteBooking = (id) => {
+    const confirm = window.confirm('do you want to delete the order')
+    if (confirm) {
+
+      fetch(`https://car-seller-server-nine.vercel.app/bookings/${id}`, {
+        method: "DELETE",
+        headers: {
+          authorization : `Bearer ${localStorage.getItem("jwt-token")}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data.deletedCount > 0) {
+            toast.success('booked product is deleted')
+            refetch()
+          }
+        })
+    }
+  };
+
+
+  if (isLoading) return <Spinner />
 
 
   return (
@@ -61,40 +87,21 @@ const MyOrders = () => {
                   <td>{booking.location}</td>
                   <td>{booking.todayDate}</td>
                   <th>
-                    <button className="btn btn-info btn-xs mr-3">pay Now</button>
-                    <button className="btn btn-error btn-xs">Delete Booking</button>
+                    <button
+                      className="btn btn-info btn-xs mr-3"
+                      onClick={handlePayNow}>
+                      pay Now
+                    </button>
+                    <button
+                      className="btn btn-error btn-xs"
+                      onClick={() => deleteBooking(booking._id)}
+                    >
+                      Delete Booking
+                    </button>
                   </th>
                 </tr>)
             }
-            {/* <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <img src="/tailwind-css-component-profile-4@56w.png" alt="Avatar Tailwind CSS Component" />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-bold">Marjy Ferencz</div>
-                    <div className="text-sm opacity-50">Russia</div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                Rowe-Schoen
-                <br />
-                <span className="badge badge-ghost badge-sm">Office Assistant I</span>
-              </td>
-              <td>Crimson</td>
-              <th>
-                <button className="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr> */}
+
           </tbody>
 
         </table>
