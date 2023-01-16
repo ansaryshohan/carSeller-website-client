@@ -18,6 +18,7 @@ import AllUsers from "../Components/DashBoardTopics/AllUsers";
 import Buyers from "../Components/DashBoardTopics/Buyers";
 import Sellers from "../Components/DashBoardTopics/Sellers";
 import Blog from "../Components/Blog/Blog";
+import AllBookings from "../Components/DashBoardTopics/AllBookings";
 
 export const router = createBrowserRouter([
   {
@@ -71,7 +72,7 @@ export const router = createBrowserRouter([
     children:[
       {
         path:'/dashboard',
-        element:<DashBoard/>
+        element:<PrivateRouter><DashBoard/></PrivateRouter>
       },
       {
         path:'/dashboard/myorders',
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/sellers',
         element:<Sellers/>
+      },
+      {
+        path:'/dashboard/allbookings',
+        element:<AllBookings/>
       },
     ]
   }

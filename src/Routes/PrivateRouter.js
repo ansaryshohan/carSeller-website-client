@@ -10,11 +10,11 @@ const PrivateRouter = ({children}) => {
   if(loading){
     return <Spinner/>
   }
-  if(!user && !user?.email){
-    return <Navigate to='/login' from={{state:location}} replace/>
+  if(user && user?.email){
+    return children;
   }
-
-  return children;
+  
+  return <Navigate to='/login' from={{state:location}} replace/>
 };
 
 export default PrivateRouter;

@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
+import Spinner from '../../SharedComponent/Spinner/Spinner';
 
 const Buyers = () => {
   const { user, userRole } = useContext(AuthContext)
-  const { isLoading, data: allBuyerData } = useQuery({
+  const { isLoading, data: allBuyerData, refetch } = useQuery({
     queryKey: ['allBuyerData'],
     queryFn: () =>
       fetch(`https://car-seller-server-nine.vercel.app/buyers?email=${user.email}&role=${userRole}`, {
@@ -13,11 +15,28 @@ const Buyers = () => {
         }
       })
         .then(res => res.json())
-
   })
-  // console.log(resData)
 
-  if (isLoading) return 'Loading...'
+  const handleDelete = (id) => {
+    const confirm = window.confirm("Do you want to delete the buyer");
+    if (confirm) {
+      fetch(`https://car-seller-server-nine.vercel.app/buyers/${id}`, {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("jwt-token")}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data.deletedCount > 0) {
+            toast.success("the buyer is deleted")
+            refetch()
+          }
+        })
+    }
+  }
+
+  if (isLoading) return <Spinner/>
 
 
   return (
@@ -62,7 +81,9 @@ const Buyers = () => {
                   </td>
                   <td>{user.role}</td>
                   <th>
-                    <button className="btn btn-error btn-xs">Delete </button>
+                    <button
+                      className="btn btn-error btn-xs"
+                      onClick={() => handleDelete(user._id)}>Delete </button>
                   </th>
                 </tr>)
             }

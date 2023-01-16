@@ -10,7 +10,7 @@ import BuyerDashBoard from './BuyerDashBoard'
 
 
 const Sidebar = () => {
-  const { user, logOut, userRole } = useContext(AuthContext)
+  const { user, logOut, userRole} = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState('false')
   const navigate = useNavigate()
 
@@ -85,7 +85,7 @@ const Sidebar = () => {
           {/* NavBar Items */}
           <div className='flex flex-col justify-between flex-1 mt-6'>
             <nav>
-              {
+              { 
                 userRole === 'Admin' ? <AdminDashBoard />
                   :
                   userRole === 'Seller' ? <SellerDashBoard />

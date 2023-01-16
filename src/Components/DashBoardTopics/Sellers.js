@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
+import Spinner from '../../SharedComponent/Spinner/Spinner';
 
 const Sellers = () => {
   const { user, userRole } = useContext(AuthContext)
-  const { isLoading, data: allSellerData } = useQuery({
+  const { isLoading, data: allSellerData, refetch } = useQuery({
     queryKey: ['allSellerData'],
     queryFn: () =>
       fetch(`https://car-seller-server-nine.vercel.app/sellers?email=${user.email}&role=${userRole}`, {
@@ -15,9 +17,51 @@ const Sellers = () => {
         .then(res => res.json())
 
   })
-  // console.log(resData)
 
-  if (isLoading) return 'Loading...'
+  // deleting the seller
+  const handleDelete = (id, sellerName) => {
+    const confirm = window.confirm(`Do you want to delete the seller ${sellerName}`);
+    if (confirm) {
+      fetch(`https://car-seller-server-nine.vercel.app/sellers/${id}`, {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("jwt-token")}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data.deletedCount > 0) {
+            toast.success("the seller is deleted")
+            refetch()
+          }
+        })
+    }
+  }
+
+  // verifying the seller
+  const handleVerify = (id, sellerName) => {
+    const confirm = window.confirm(`Do you want to verify ${sellerName}`);
+
+    if (confirm) {
+      fetch(`https://car-seller-server-nine.vercel.app/sellers/${id}`, {
+        method: "PUT",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("jwt-token")}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          if (data.data.modifiedCount > 0) {
+            toast.success("seller is verified");
+            refetch()
+          }
+        })
+    }
+  }
+
+
+  if (isLoading) return <Spinner/>
 
 
   return (
@@ -33,6 +77,7 @@ const Sellers = () => {
               <th>User</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Verification</th>
               <th> Action</th>
             </tr>
           </thead>
@@ -61,9 +106,24 @@ const Sellers = () => {
                     {user.email}
                   </td>
                   <td>{user.role}</td>
+                  {
+                    !user.verification?
+                    <td></td>:
+                    <td>verified</td>
+                  }
                   <th>
-                    <button className="btn btn-info btn-xs mr-3">Verify</button>
-                    <button className="btn btn-error btn-xs">Delete </button>
+                    {
+                      !user.verification ?
+                        <button
+                          className="btn btn-info btn-xs mr-3"
+                          onClick={() => handleVerify(user._id, user.userName)}>Verify
+                        </button>
+                        :
+                        <></>
+                    }
+                    <button
+                      className="btn btn-error btn-xs"
+                      onClick={() => handleDelete(user._id, user.userName)}>Delete </button>
                   </th>
                 </tr>)
             }

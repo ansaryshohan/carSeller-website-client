@@ -23,8 +23,7 @@ const DashBoardLayout = () => {
   return (
     <div className='md:flex relative min-h-screen'>
 
-      {!loading?
-        user && userRole ?
+      {!loading ?
           <>
             <Sidebar />
             <div className='flex-1 md:ml-64'>
@@ -34,11 +33,10 @@ const DashBoardLayout = () => {
             </div>
           </>
           :
-          <>
-            <Spinner />
+          <>      
+             <Spinner />
           </>
-          :
-          <Spinner/>
+
       }
     </div>
   )

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
+import Spinner from '../../SharedComponent/Spinner/Spinner';
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext)
@@ -38,7 +39,7 @@ const MyProducts = () => {
   }
 
 
-  if (isLoading) return 'Loading...'
+  if (isLoading) return <Spinner/>
 
   return (
     <div>

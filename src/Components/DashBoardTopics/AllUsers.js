@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
+import { FaDollarSign, FaSearch, FaSellsy, FaUserGraduate } from 'react-icons/fa';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
+import Spinner from '../../SharedComponent/Spinner/Spinner';
 
 const AllUsers = () => {
   const { user, userRole } = useContext(AuthContext)
-  const { isLoading, data: allUserData } = useQuery({
+  const { isLoading, data: allUserData, refetch } = useQuery({
     queryKey: ['allUserData'],
     queryFn: () =>
       fetch(`https://car-seller-server-nine.vercel.app/allusers?email=${user.email}&role=${userRole}`, {
@@ -15,9 +18,10 @@ const AllUsers = () => {
         .then(res => res.json())
 
   })
-  // console.log(resData)
 
-  if (isLoading) return 'Loading...'
+
+
+  if (isLoading) return <Spinner/>
 
 
   return (
@@ -62,8 +66,13 @@ const AllUsers = () => {
                   </td>
                   <td>{user.role}</td>
                   <th>
-                    {user.role !== "Admin" ? <button className="btn btn-info btn-xs mr-3">Make Admin</button>
-                      : "Admin"}
+                   {
+                    user.role==="Admin"?
+                    <FaUserGraduate/>:
+                    user.role==="Seller"?
+                    <FaSearch/> :
+                    <FaDollarSign/>
+                   }
                   </th>
                 </tr>)
             }
