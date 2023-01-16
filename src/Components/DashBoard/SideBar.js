@@ -7,10 +7,11 @@ import FilledButton from '../../SharedComponent/Buttons/FilledButton'
 import AdminDashBoard from './AdminDashBoard'
 import SellerDashBoard from './SellerDashBoard'
 import BuyerDashBoard from './BuyerDashBoard'
+import Spinner from '../../SharedComponent/Spinner/Spinner'
 
 
 const Sidebar = () => {
-  const { user, logOut, userRole} = useContext(AuthContext)
+  const { user, logOut,userRole,loading} = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState('false')
   const navigate = useNavigate()
 
@@ -78,6 +79,9 @@ const Sidebar = () => {
               <p className='mx-2 mt-1 text-sm font-medium text-gray-600 '>
                 {user?.email}
               </p>
+              <p className='mx-2 mt-1 text-sm font-medium text-gray-600 '>
+                {userRole}
+              </p>
 
             </div>
           </div>
@@ -85,7 +89,9 @@ const Sidebar = () => {
           {/* NavBar Items */}
           <div className='flex flex-col justify-between flex-1 mt-6'>
             <nav>
-              { 
+              { loading ? 
+              <Spinner/>
+              :
                 userRole === 'Admin' ? <AdminDashBoard />
                   :
                   userRole === 'Seller' ? <SellerDashBoard />

@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
-import { toast } from 'react-hot-toast';
-import { FaDollarSign, FaSearch, FaSellsy, FaUserGraduate } from 'react-icons/fa';
+import { FaDollarSign, FaSearch, FaUserGraduate } from 'react-icons/fa';
 import { AuthContext } from '../../AuthProvide/AuthProvider';
 import Spinner from '../../SharedComponent/Spinner/Spinner';
 
 const AllUsers = () => {
   const { user, userRole } = useContext(AuthContext)
-  const { isLoading, data: allUserData, refetch } = useQuery({
+  const { isLoading, data: allUserData } = useQuery({
     queryKey: ['allUserData'],
     queryFn: () =>
       fetch(`https://car-seller-server-nine.vercel.app/allusers?email=${user.email}&role=${userRole}`, {

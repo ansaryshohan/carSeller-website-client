@@ -5,20 +5,7 @@ import Sidebar from '../Components/DashBoard/SideBar';
 import Spinner from '../SharedComponent/Spinner/Spinner';
 
 const DashBoardLayout = () => {
-  const { user } = useContext(AuthContext)
-  const [userRole, setUserRole] = useState("")
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    setLoading(true)
-    fetch(`https://car-seller-server-nine.vercel.app/user/${user?.email}`)
-      .then(res => res.json())
-      .then(data => {
-        setUserRole(data?.data?.role)
-        setLoading(false)
-      })
-
-  }, [user])
+  const { loading } = useContext(AuthContext)
 
   return (
     <div className='md:flex relative min-h-screen'>

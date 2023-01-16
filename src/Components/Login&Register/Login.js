@@ -25,6 +25,11 @@ const Login = () => {
     fetch(`https://car-seller-server-nine.vercel.app/user/${email}`)
       .then(res => res.json())
       .then(data => {
+        if(!data.data){
+            toast.error('invalid user')
+        }
+        else{
+          
         if (data?.data.role === role) {
 
           // email and password login
@@ -60,6 +65,7 @@ const Login = () => {
         }
         else {
           toast.error(`you don't have a ${role} account`)
+        }
         }
       })
   }
